@@ -1,9 +1,114 @@
-const express = require('express');
+// Login route
+const express = require("express");
 const router = express.Router();
+const cookieParser = require('cookie-parser');
+const app = express();
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth2');
+const cookieSession = require('cookie-session');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    res.send('respond with a resource');
+router.use(express.json());
+
+const userDb = require("../models/userModel");
+
+
+// cookieSession config
+router.use(cookieSession({
+    maxAge:  5*60 * 1000, // One day in milliseconds
+    keys: ['sandhyaaaaaaaa'],
+}));
+
+router.use(passport.initialize()); // Used to initialize passport
+router.use(passport.session()); // Used to persist login sessions
+
+// Strategy config
+passport.use(new GoogleStrategy({
+        clientID: '571063685637-vgrphb2lc7banjroqs10tvhgd4342e4j.apps.googleusercontent.com',
+        clientSecret: 'hRQPR2osopsm4pJ_HUZRn4FC',
+        callbackURL: 'http://localhost:3000/login/auth/google/callback'
+    },
+    (accessToken, refreshToken, profile, done) => {
+    console.log( accessToken);
+        //done(null, profile); // passes the profile data to serializeUser
+         userDb.findOne({googleId:profile.id})
+            .then((user) => {
+                if(user){
+                    console.log("User found in the database");
+                    done(null, user);
+                }
+                else{
+                    let newUser ={displayName:profile.displayName, image:profile.photos[0].value, google:{},googleId : profile.id,
+                        googleToken : accessToken, role:"user"};
+
+                    userDb.insert(newUser)
+                        .then(newUser => console.log("user added"));
+
+                    done(null, newUser);
+                }
+            })
+            .catch(err => console.log(err));
+    }
+));
+
+// Used to stuff a piece of information into a cookie
+passport.serializeUser((user, done) => {
+    done(null, user);
 });
 
-module.exports = router;
+// Used to decode the received cookie and persist session
+passport.deserializeUser((user, done) => {
+    done(null, user);
+});
+
+// Middleware to check if the user is authenticated
+function  isUserAuthenticated(req, res, next) {
+    //console.log("hhhhhhh",req.user);
+    //console.log("lll",req.session.passport.user);
+    if (req.user) {
+        next();
+    } else {
+        res.json({message:'You must login!',success:false});
+    }
+}
+
+// Routes
+router.get('/', (req, res) => {
+    res.send('index');
+});
+// Add headers
+
+// passport.authenticate middleware is used here to authenticate the request
+router.get('/auth/google', passport.authenticate('google', {
+
+    scope: ['profile'] // Used to specify the required data
+}));
+
+// The middleware receives the data from Google and runs the function on Strategy config
+router.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
+
+    console.log("response------------>",req);
+    //res.redirect("http://localhost:3001?token=" + req.session.passport.user);
+    res.cookie("user", req.session.passport.user);
+    res.redirect('http://localhost:3001/');
+
+});
+
+// Secret route
+router.get('/secret', isUserAuthenticated, (req, res) => {
+    //console.log("response------------>",req.originalUrl);
+    //console.log(req.cookies.user);
+    res.json({User:JSON.stringify(req.session.passport.user),success:true});
+});
+
+// Logout route
+router.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('http://localhost:3001/');
+});
+
+
+
+module.exports = {router:router,
+isUserAuthenticated:isUserAuthenticated}
+;
+//module.exports = isUserAuthenticated;
