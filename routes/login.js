@@ -106,13 +106,13 @@ router.get('/auth/google/callback', passport.authenticate('google'), (req, res) 
         console.log("return to", returnTo);
         if (typeof returnTo === 'string') {
             console.log("inside if ------------->>>>>>>>");
-            return res.redirect(`http://52.36.63.204:3000${returnTo}`)
+            return res.redirect(`http://34.211.0.250:3000${returnTo}`)
         }
     } catch {
         // just redirect normally below
     }
     res.cookie("user", req.session.passport.user);
-    res.redirect('http://52.36.63.204:3000/')
+    res.redirect('http://34.211.0.250:3000/')
 
 
     //res.redirect('http://localhost:3001/');
@@ -129,7 +129,7 @@ router.get('/secret', isUserAuthenticated, (req, res) => {
 // Logout route
 router.get('/logout', (req, res) => {
     req.logout();
-    res.redirect('http://52.36.63.204:3000/');
+    res.redirect('http://34.211.0.250:3000/');
 });
 
 
