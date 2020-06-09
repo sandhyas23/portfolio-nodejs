@@ -14,7 +14,7 @@ const authentication = require('./login');
 
 
 const storage = multer.diskStorage({
-    destination: "./public/images/",
+    destination: "./public/static/media/",
     filename: function(req, file, cb){
         cb(null,req.params.category +req.params.article + ".jpg");
     }

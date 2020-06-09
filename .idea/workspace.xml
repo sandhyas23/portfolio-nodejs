@@ -2,14 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d346a54-a346-4998-8e14-a4fe16e341a9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commentsDB" beforeDir="false" afterPath="$PROJECT_DIR$/commentsDB" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navLinksDB" beforeDir="false" afterPath="$PROJECT_DIR$/navLinksDB" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/asset-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/testhh.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/testjjj.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/testk.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/testl2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/testrrrr.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/testrrrr2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/testsandy.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/service-worker.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/service-worker.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/navLinks.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/navLinks.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,7 +41,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.16.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -79,6 +87,9 @@
       <workItem from="1588193270101" duration="892000" />
       <workItem from="1588202175395" duration="84879000" />
       <workItem from="1589305360551" duration="11820000" />
+      <workItem from="1589737729099" duration="6000" />
+      <workItem from="1589912565565" duration="6987000" />
+      <workItem from="1591132500919" duration="4011000" />
     </task>
     <servers />
   </component>

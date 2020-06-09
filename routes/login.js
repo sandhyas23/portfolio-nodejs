@@ -25,7 +25,7 @@ router.use(passport.session()); // Used to persist login sessions
 passport.use(new GoogleStrategy({
         clientID: '571063685637-vgrphb2lc7banjroqs10tvhgd4342e4j.apps.googleusercontent.com',
         clientSecret: 'hRQPR2osopsm4pJ_HUZRn4FC',
-        callbackURL: 'http://localhost:3000/login/auth/google/callback'
+        callbackURL: 'http://52.36.63.204:3000/login/auth/google/callback'
     },
     (accessToken, refreshToken, profile, done) => {
     console.log( accessToken);
@@ -78,18 +78,44 @@ router.get('/', (req, res) => {
 // Add headers
 
 // passport.authenticate middleware is used here to authenticate the request
-router.get('/auth/google', passport.authenticate('google', {
+router.get('/auth/google' , function(req, res, next) {
 
-    scope: ['profile'] // Used to specify the required data
-}));
+        const { returnTo } = req.query;
+        console.log("lllllllllll", returnTo);
+        const state = returnTo
+            ? Buffer.from(JSON.stringify({ returnTo })).toString('base64') : undefined
+        const authenticator = passport.authenticate('google', {
+
+            scope: ['profile'] ,
+            state// Used to specify the required data
+        })
+        authenticator(req, res, next)
+
+
+        // req.session.browserURL = req.query.id;
+        // next();
+    },
+
+);
 
 // The middleware receives the data from Google and runs the function on Strategy config
 router.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
-
-    console.log("response------------>",req);
-    //res.redirect("http://localhost:3001?token=" + req.session.passport.user);
+    try {
+        const { state } = req.query;
+        const { returnTo } = JSON.parse(Buffer.from(state, 'base64').toString())
+        console.log("return to", returnTo);
+        if (typeof returnTo === 'string') {
+            console.log("inside if ------------->>>>>>>>");
+            return res.redirect(`http://52.36.63.204:3000${returnTo}`)
+        }
+    } catch {
+        // just redirect normally below
+    }
     res.cookie("user", req.session.passport.user);
-    res.redirect('http://localhost:3001/');
+    res.redirect('http://52.36.63.204:3000/')
+
+
+    //res.redirect('http://localhost:3001/');
 
 });
 
@@ -103,7 +129,7 @@ router.get('/secret', isUserAuthenticated, (req, res) => {
 // Logout route
 router.get('/logout', (req, res) => {
     req.logout();
-    res.redirect('http://localhost:3001/');
+    res.redirect('http://52.36.63.204:3000/');
 });
 
 
