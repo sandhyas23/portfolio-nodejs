@@ -11,6 +11,7 @@ const navLinksRouter = require('./routes/navLinks');
 const commentsRouter =  require('./routes/commentsRoute')
 const navLinksDb = require('./models/navLinksModel');
 const usersDb = require('./models/userModel');
+const history = require('connect-history-api-fallback');
 
 const app = express();
 
@@ -51,10 +52,7 @@ usersDb.findOne({role:"admin"})
     });
 
 
-// app.get('/', (req, res) => {
-//
-//     res.json({"ggggggg":req.session});
-// });
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -65,6 +63,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//app.use('/static', express.static(path.join(__dirname, '../client/build//static')));
+
+
+//app.use(history());
 
 
 
@@ -74,7 +76,9 @@ app.use('/login', loginRouter.router);
 app.use('/navlinks',navLinksRouter);
 app.use('/comments',commentsRouter);
 
-
+app.get('*', function(req, res) {
+    res.sendFile('index.html', {root: path.join(__dirname, './public')});
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
