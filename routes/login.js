@@ -25,7 +25,7 @@ router.use(passport.session()); // Used to persist login sessions
 passport.use(new GoogleStrategy({
         clientID: '571063685637-vgrphb2lc7banjroqs10tvhgd4342e4j.apps.googleusercontent.com',
         clientSecret: 'hRQPR2osopsm4pJ_HUZRn4FC',
-        callbackURL: 'http://54.201.219.38/login/auth/google/callback'
+        callbackURL: 'http://54.201.219.38:3000/login/auth/google/callback'
     },
     (accessToken, refreshToken, profile, done) => {
     console.log( accessToken);
@@ -106,13 +106,13 @@ router.get('/auth/google/callback', passport.authenticate('google'), (req, res) 
         console.log("return to", returnTo);
         if (typeof returnTo === 'string') {
             console.log("inside if ------------->>>>>>>>");
-            return res.redirect(`http://54.201.219.38${returnTo}`)
+            return res.redirect(`http://54.201.219.38:3000${returnTo}`)
         }
     } catch {
         // just redirect normally below
     }
     res.cookie("user", req.session.passport.user);
-    res.redirect('http://54.201.219.38/')
+    res.redirect('http://54.201.219.38:3000/')
 
 
     //res.redirect('http://localhost:3001/');
@@ -129,7 +129,7 @@ router.get('/secret', isUserAuthenticated, (req, res) => {
 // Logout route
 router.get('/logout', (req, res) => {
     req.logout();
-    res.redirect('http://54.201.219.38/');
+    res.redirect('http://54.201.219.38:3000/');
 });
 
 
