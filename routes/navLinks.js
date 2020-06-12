@@ -34,7 +34,7 @@ router.post("/upload/:category/:article", (req,res)=> {
             console.log("Request file ---", req.file);//Here you get file.
             /*Now do where ever you want to do*/
             if(!err)
-                res.status(200).json({"image":true});
+                res.status(200).json({"image":true, success:true});
             else{
                 res.send("error");
             }
